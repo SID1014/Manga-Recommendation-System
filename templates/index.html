@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manga Recommender</title>
-    <link rel="stylesheet" href="../static/style.css">
+  <meta charset="utf-8">
+  <title>Manga Recommender — Demo</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Manga Recommendation System</h1>
-    <form method="POST">
-        <input type="text" name="title" placeholder="Enter manga title" required>
-        <button type="submit">Get Recommendations</button>
+  <div class="container">
+    <h1>Manga Recommender (CBF)</h1>
+    <form action="/recommend" method="post">
+      <input name="title" placeholder="Enter exact or partial manga title" list="titles" required>
+      <datalist id="titles">
+        {% for t in sample_titles %}
+          <option value="{{ t }}"></option>
+        {% endfor %}
+      </datalist>
+      <button type="submit">Recommend</button>
     </form>
+    <p class="hint">Tip: try "Naruto" or any title from your dataset.</p>
+  </div>
 </body>
 </html>
