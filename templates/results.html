@@ -14,15 +14,41 @@
     {% endif %}
     <div class="grid">
       {% for rec in recommendations %}
-        <div class="card">
-          {% if rec.image_url %}
+    <div class="card">
+        {% if rec.image_url %}
             <img src="{{ rec.image_url }}" alt="{{ rec.title }}">
-          {% endif %}
-          <h3>{{ rec.title }}</h3>
-          <p class="genres">{{ rec.genres }}</p>
-          <p class="synopsis">{{ rec.synopsis }}</p>
-        </div>
-      {% endfor %}
+        {% endif %}
+
+        <h3>{{ rec.title }}</h3>
+
+        <p class="genres">{{ rec.genres }}</p>
+
+        <p class="synopsis">{{ rec.synopsis }}</p>
+
+        {% if current_user.is_authenticated %}
+        <form action="{{ url_for('main.rate_manga') }}" method="POST" style="margin-top: 5px;">
+
+            <input type="hidden" name="manga_id" value="{{ rec['id'] }}">
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" name="title" value="{{ title }}">
+
+            <label for="rating">Rate:</label>
+            <select name="rating" required>
+                <option value="1">1 ⭐</option>
+                <option value="2">2 ⭐</option>
+                <option value="3">3 ⭐</option>
+                <option value="4">4 ⭐</option>
+                <option value="5">5 ⭐</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        {% else %}
+
+<p><a href="/auth/login">Login to rate</a></p>
+
+{% endif %}
+    </div>
+{% endfor %}
     </div>
   </div>
 </body>
