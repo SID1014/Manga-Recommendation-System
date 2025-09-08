@@ -1,0 +1,13 @@
+prefix=D:/Desktop/Envs/Git/Manga-Recommendation-System/env/Library
+exec_prefix=D:/Desktop/Envs/Git/Manga-Recommendation-System/env/Library
+libdir=D:/Desktop/Envs/Git/Manga-Recommendation-System/env/Library/lib
+sharedlibdir=D:/Desktop/Envs/Git/Manga-Recommendation-System/env/Library/lib
+includedir=D:/Desktop/Envs/Git/Manga-Recommendation-System/env/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

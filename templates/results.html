@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendations for {{ title }}</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1>Recommendations for "{{ title }}"</h1>
+
+    {% if recommendations %}
+        <div class="recommendations">
+            {% for rec in recommendations %}
+                <div class="card">
+                    <h3>{{ rec.title }}</h3>
+                    <p><strong>Genres:</strong> {{ rec.genres }}</p>
+                    {% if rec.image_url %}
+                        <img src="{{ rec.image_url }}" alt="{{ rec.title }}" style="width:150px;">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No recommendations found. Try another title.</p>
+    {% endif %}
+
+    <a href="/">Back</a>
+</body>
+</html>

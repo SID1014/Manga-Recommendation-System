@@ -1,0 +1,42 @@
+name: Manga
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bzip2=1.0.8=h2bbff1b_6
+  - ca-certificates=2025.8.3=h4c7d964_0
+  - expat=2.7.1=h8ddb27b_0
+  - joblib=1.5.2=pyhd8ed1ab_0
+  - libblas=3.9.0=35_h5709861_mkl
+  - libcblas=3.9.0=35_h2a3cdd5_mkl
+  - libexpat=2.7.1=hac47afa_0
+  - libffi=3.4.4=hd77b12b_1
+  - libhwloc=2.12.1=default_h88281d1_1000
+  - libiconv=1.18=hc1393d2_2
+  - liblapack=3.9.0=35_hf9ab0e9_mkl
+  - libsqlite=3.50.4=hf5d6505_0
+  - libwinpthread=12.0.0.r4.gg4f2fc60ca=h57928b3_9
+  - libxml2=2.13.8=h866ff63_0
+  - libzlib=1.2.13=h2466b09_6
+  - llvm-openmp=20.1.8=hfa2b4ca_2
+  - mkl=2024.2.2=h57928b3_16
+  - numpy=1.26.4=py312h8753938_0
+  - openssl=3.5.2=h725018a_0
+  - pip=25.2=pyhc872135_0
+  - python=3.12.3=h2628c8c_0_cpython
+  - python_abi=3.12=8_cp312
+  - scikit-surprise=1.1.4=py312h0829862_1
+  - scipy=1.16.1=py312h33376e8_1
+  - setuptools=78.1.1=py312haa95532_0
+  - sqlite=3.50.2=hda9a48d_1
+  - tbb=2021.13.0=h18a62a1_3
+  - tk=8.6.15=hf199647_0
+  - tzdata=2025b=h04d1e81_0
+  - ucrt=10.0.22621.0=haa95532_0
+  - vc=14.3=h2df5915_10
+  - vc14_runtime=14.44.35208=h4927774_10
+  - vs2015_runtime=14.44.35208=ha6b5a95_10
+  - wheel=0.45.1=py312haa95532_0
+  - xz=5.6.4=h4754444_1
+  - zlib=1.2.13=h2466b09_6
+prefix: C:\Users\Siddh\anaconda3\envs\Manga
