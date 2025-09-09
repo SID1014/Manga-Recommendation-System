@@ -6,7 +6,20 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <div class="header">
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>
+        <a href="{{ url_for('auth.signup') }}" class="btn-signup">Sign Up</a>
+    {% else %}
+        <span>Welcome, {{ current_user.username }}!</span>
+        <a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a>
+        <li class="nav-item">
+  <a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+</li>
+    {% endif %}
+</div>
   <div class="container">
+     {% block content %}
     <h1>Manga Recommender (CBF)</h1>
     <form action="/recommend" method="post">
       <input name="title" placeholder="Enter exact or partial manga title" list="titles" required>
@@ -18,6 +31,7 @@
       <button type="submit">Recommend</button>
     </form>
     <p class="hint">Tip: try "Naruto" or any title from your dataset.</p>
+     {% endblock %}
   </div>
 </body>
 </html>

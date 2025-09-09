@@ -1,0 +1,33 @@
+<div class="onboarding-header">
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>
+        <a href="{{ url_for('auth.signup') }}" class="btn-signup">Sign Up</a>
+    {% else %}
+        <span>Welcome, {{ current_user.username }}!</span>
+        <a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a>
+    {% endif %}
+</div>
+
+<h2>Tell us what you like!</h2>
+<p>Rate these mangas so we can personalize your recommendations:</p>
+
+<form method="POST" action="{{ url_for('main.onboarding') }}">
+    <div class="manga-grid">
+        {% for manga in sample_mangas %}
+        <div class="manga-card">
+            <h3>{{ manga['title'] }}</h3>
+            <p>{{ manga['synopsis'][:150] }}...</p>
+            <select name="{{ manga['id'] }}" required>
+                <option value="">Rate this manga</option>
+                <option value="1">1 ⭐</option>
+                <option value="2">2 ⭐</option>
+                <option value="3">3 ⭐</option>
+                <option value="4">4 ⭐</option>
+                <option value="5">5 ⭐</option>
+            </select>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Finish</button>
+</form>

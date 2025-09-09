@@ -12,7 +12,7 @@ MODELS_DIR.mkdir(exist_ok=True)
 def build_and_save():
     df = pd.read_csv(DATA_PATH)
     # Ensure required columns exist
-    for col in ['id','title','genres','synopsis']:
+    for col in ['id','title','genres','synopsis','image_url']:
         if col not in df.columns:
             raise ValueError(f"Missing column: {col} in {DATA_PATH}")
 

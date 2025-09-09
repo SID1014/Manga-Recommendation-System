@@ -37,7 +37,24 @@ def login():
             return redirect(url_for('main.index'))
         else:
             flash("Invalid email or password", "error")
+        user = User.query.filter_by(username=request.form.get("username")).first()
+        
+        if user and check_password_hash(user.password, request.form.get("password")):
+            login_user(user)
 
+            # Merge guest ratings if they exist
+            guest_ratings = session.pop('guest_ratings', None)
+            if guest_ratings:
+                for manga_id, rating_value in guest_ratings.items():
+                    existing = Rating.query.filter_by(user_id=user.id, manga_id=manga_id).first()
+                    if existing:
+                        existing.rating = rating_value
+                    else:
+                        new_rating = Rating(user_id=user.id, manga_id=manga_id, rating=rating_value)
+                        db.session.add(new_rating)
+                db.session.commit()
+
+            return redirect(url_for("main.index"))
     return render_template("login.html")
 
 @auth.route("/logout")
