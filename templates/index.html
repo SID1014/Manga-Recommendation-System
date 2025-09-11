@@ -33,5 +33,53 @@
     <p class="hint">Tip: try "Naruto" or any title from your dataset.</p>
      {% endblock %}
   </div>
+  
+<div class="container mt-5">
+
+  {% if current_user.is_authenticated %}
+    <h2 class="mb-4">
+      {% if recommendations %}
+        Because you liked...
+      {% else %}
+        Explore Mangas
+      {% endif %}
+    </h2>
+  {% else %}
+    <h2 class="mb-4">
+      {% if session.guest_manga_history %}
+        Based on your browsing
+      {% else %}
+        Explore Mangas
+      {% endif %}
+    </h2>
+  {% endif %}
+
+  <div class="row">
+    {% for rec in recommendations %}
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ rec.title }}</h5>
+            <p class="card-text text-muted">{{ rec.genre }}</p>
+
+            {% if current_user.is_authenticated %}
+              <form action="{{ url_for('main.rate_manga') }}" method="POST" class="d-flex justify-content-center">
+                <input type="hidden" name="manga_id" value="{{ rec.manga_id }}">
+                <select name="rating" class="form-select form-select-sm me-2">
+                  {% for i in range(1, 6) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
+                <button class="btn btn-primary btn-sm">Rate</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
 </body>
 </html>

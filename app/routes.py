@@ -10,19 +10,42 @@ main = Blueprint('main', __name__)
 
 @main.route("/")
 def index():
+    recommendations = []
+
     if current_user.is_authenticated:
-        # Check if user has rated anything
+        # Logged-in user
         has_ratings = Rating.query.filter_by(user_id=current_user.id).count() > 0
         if not has_ratings:
             return redirect(url_for("main.onboarding"))
+        user_ratings_count = Rating.query.filter_by(user_id=current_user.id).count()
+
+        if user_ratings_count >= 3:
+            # Hybrid recommendations
+            # Use their most recently rated manga as a seed
+            last_rating = Rating.query.filter_by(user_id=current_user.id).order_by(Rating.id.desc()).first()
+            seed_title = manga_df[manga_df['manga_id'] == last_rating.manga_id]['title'].values[0]
+            recommendations = get_hybrid_recommendations(current_user.id, seed_title, alpha=0.5, top_n=10)
+        else:
+            # Not enough ratings → random diverse recommendations
+            recommendations = manga_df.sample(10)[['title', 'genres']].to_dict(orient='records')
+
     else:
-        # If guest user, send them to onboarding
+        # Guest user
         if 'guest_ratings' not in session or len(session['guest_ratings']) == 0:
             return redirect(url_for("main.onboarding"))
+        guest_history = session.get('guest_manga_history', [])
 
-    # If they have ratings, show personalized recommendations
-    sample_titles = list(manga_df['title'].head(200).astype(str))
-    return render_template("index.html", sample_titles=sample_titles)
+        if guest_history:
+            # Use guest's last viewed manga for CBF
+            last_manga_id = guest_history[-1]
+            seed_title = manga_df[manga_df['manga_id'] == last_manga_id]['title'].values[0]
+            cbf_recs = get_cbf_scores(seed_title, top_n=10)
+            recommendations = [{'title': t, 'genre': manga_df[manga_df['title'] == t]['genre'].values[0]} for t, _ in cbf_recs]
+        else:
+            # No history → random diverse recommendations
+            recommendations = manga_df.sample(10)[['title', 'genres']].to_dict(orient='records')
+
+    return render_template("index.html", recommendations=recommendations)
 
 
 
