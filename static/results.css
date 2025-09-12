@@ -1,0 +1,169 @@
+/* --- General Body & Font Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.6;
+}
+
+/* --- Main Container & Utility --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* --- Back Link --- */
+.container > a {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
+}
+
+.container > a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* --- Page Title --- */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+}
+
+/* --- Message / Notification --- */
+p.message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+
+/* --- Results Grid Layout --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+/* --- Definitive Recommendation Card --- */
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensures image corners are rounded */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+    width: 100%;
+    height: 250px; /* Fixed height for uniformity */
+    object-fit: cover; /* Prevents image distortion */
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #34495e;
+    margin: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.card .genres {
+    font-size: 0.85rem;
+    color: #007bff;
+    font-weight: 500;
+    margin: 0 1.5rem 1rem 1.5rem;
+}
+
+.card .synopsis {
+    font-size: 0.95rem;
+    color: #555;
+    padding: 0 1.5rem;
+    flex-grow: 1; /* Pushes form to the bottom */
+    margin-bottom: 1.5rem;
+}
+
+.card a {
+    color: #007bff;
+    font-weight: 500;
+}
+
+/* --- Card Form Styling --- */
+.card form, .card p:last-child {
+    background-color: #f8f9fa;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card label {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.card select {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+.card button[type="submit"] {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    body {
+        padding: 1.5rem 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+

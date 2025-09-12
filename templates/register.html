@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Manga Recommender{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container fade-in-up">
+        <h1 class="form-title">Join MangaRec</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-error mb-3">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('auth.register') }}">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    class="form-input" 
+                    required
+                    autocomplete="username"
+                    minlength="3"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    required
+                    autocomplete="email"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    required
+                    autocomplete="new-password"
+                    minlength="6"
+                >
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Create Account
+            </button>
+        </form>
+        
+        <p class="text-center mt-3">
+            Already have an account? 
+            <a href="{{ url_for('auth.login') }}" class="form-link">Sign in here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
