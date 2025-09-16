@@ -173,16 +173,9 @@ gunicorn>=20.1.0
 
 ---
 
-## **📜 License**
-
-This project is licensed under the **MIT License**.
-
 ---
 
 ## **🤝 Contributing**
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
----
-
-Would you like me to also create a **sample LICENSE file** for you so you can directly add it to GitHub?
