@@ -13,6 +13,7 @@
 ## **🌟 About the Project**
 
 The Manga Recommendation System suggests manga titles tailored to the user's taste, similar to Netflix or MyAnimeList.
+**[ Live Demo](https://manga-recommendation-system-g635.onrender.com)** *(may take 30-60 seconds to load on first visit — free tier)*
 
 * **Guest Users:**
   Get instant recommendations using **Content-Based Filtering (CBF)** based on manga descriptions and genres.
