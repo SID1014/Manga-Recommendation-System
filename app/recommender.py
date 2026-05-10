@@ -35,15 +35,19 @@ def get_cbf_recommendations(manga_title, top_n=8):
     _, idx = find_closest_title(manga_title)
     if idx is None:
         # return top popular by score if can't find title
-        top = manga_df.head(top_n)
+        top = manga_df.nlargest(top_n * 3, 'score').sample(top_n)
         return top.to_dict(orient='records')
 
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1: top_n+1]
     indices = [i for i, s in sim_scores]
-    results = manga_df.iloc[indices][['id','title','genres','synopsis','image_url']]
+    cols = ['id','title','genres','synopsis','image_url','score','authors','status','chapters','themes','demographics','rank','popularity']
+    existing_cols = [c for c in cols if c in manga_df.columns]
+    results = manga_df.iloc[indices][existing_cols]
+    
     # short synopsis
-    results['synopsis'] = results['synopsis'].fillna('')
+    if 'synopsis' in results.columns:
+        results['synopsis'] = results['synopsis'].fillna('')
     
     return results.to_dict(orient='records')
 
@@ -58,11 +62,9 @@ def get_cbf_scores(title, top_n=10):
     """
     Return list of (manga_id, similarity_score) instead of just titles.
     """
-    if title not in manga_df['title'].values:
+    _, idx = find_closest_title(title)
+    if idx is None:
         return []
-
-    # Find the index of the selected manga
-    idx = manga_df[manga_df['title'] == title].index[0]
 
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:top_n+1]

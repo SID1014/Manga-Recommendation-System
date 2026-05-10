@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>Document</title>
     <link rel="stylesheet" href="../static/onboarding.css">
 </head>
@@ -31,11 +32,9 @@
             <p>{{ manga['synopsis'][:150] }}...</p>
             <select name="{{ manga['id'] }}" required>
                 <option value="">Rate this manga</option>
-                <option value="1">1 ⭐</option>
-                <option value="2">2 ⭐</option>
-                <option value="3">3 ⭐</option>
-                <option value="4">4 ⭐</option>
-                <option value="5">5 ⭐</option>
+                {% for i in range(1, 11) %}
+                <option value="{{ i }}">{{ i }} ⭐</option>
+                {% endfor %}
             </select>
         </div>
         {% endfor %}

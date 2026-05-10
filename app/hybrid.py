@@ -16,11 +16,19 @@ def get_hybrid_recommendations(user_id, title, alpha=0.5, top_n=10):
 
     # Step 3: Merge scores
     hybrid_scores = []
-    for mid in manga_ids:
-        cbf = cbf_dict.get(mid, 0)
-        cf = cf_dict.get(mid, 0)
-        final_score = alpha * cbf + (1 - alpha) * cf
-        hybrid_scores.append((mid, final_score))
+    
+    # If CF returned nothing (new user), fall back to pure CBF
+    if not cf_dict:
+        for mid in manga_ids:
+            hybrid_scores.append((mid, cbf_dict.get(mid, 0)))
+    else:
+        for mid in manga_ids:
+            cbf = cbf_dict.get(mid, 0)
+            cf = cf_dict.get(mid, 0)
+            # Normalise CF score (1-10) to 0-1 range to match CBF
+            cf_norm = cf / 10.0
+            final_score = alpha * cbf + (1 - alpha) * cf_norm
+            hybrid_scores.append((mid, final_score))
 
     # Step 4: Sort and return
     sorted_scores = sorted(hybrid_scores, key=lambda x: x[1], reverse=True)
@@ -38,12 +46,19 @@ def get_hybrid_recommendations(user_id, title, alpha=0.5, top_n=10):
             # Create a dictionary with all the desired fields
             rec_dict = {
                 'id': int(mid),
-                'title': manga_row['title'],
-                'recommendation_score': round(score, 4), # The calculated hybrid score
-                # --- Add any other fields you want from manga_df here ---
-                'genres': manga_row.get('genres', 'N/A'), # Using .get is safer if a column might not exist
+                'title': manga_row.get('title', ''),
+                'recommendation_score': round(score, 4),
+                'genres': manga_row.get('genres', 'N/A'),
                 'synopsis': manga_row.get('synopsis', ''),
-                'image_url': manga_row.get('image_url', '')
+                'image_url': manga_row.get('image_url', ''),
+                'score': manga_row.get('score', 'N/A'),
+                'authors': manga_row.get('authors', 'N/A'),
+                'status': manga_row.get('status', 'N/A'),
+                'chapters': manga_row.get('chapters', 'N/A'),
+                'themes': manga_row.get('themes', ''),
+                'demographics': manga_row.get('demographics', ''),
+                'rank': manga_row.get('rank', 'N/A'),
+                'popularity': manga_row.get('popularity', 'N/A')
             }
             recommendations.append(rec_dict)
             

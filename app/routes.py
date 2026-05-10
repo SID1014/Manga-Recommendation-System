@@ -27,7 +27,7 @@ def index():
             recommendations = get_hybrid_recommendations(current_user.id, seed_title, alpha=0.5, top_n=10)
         else:
             # Not enough ratings → random diverse recommendations
-            recommendations = manga_df.sample(10)[['title', 'genres','image_url']].to_dict(orient='records')
+            recommendations = manga_df.sample(10).to_dict(orient='records')
 
     else:
         # Guest user
@@ -36,14 +36,16 @@ def index():
         guest_history = session.get('guest_manga_history', [])
 
         if guest_history:
-            # Use guest's last viewed manga for CBF
             last_manga_id = guest_history[-1]
-            seed_title = manga_df[manga_df['manga_id'] == last_manga_id]['title'].values[0]
-            cbf_recs = get_cbf_scores(seed_title, top_n=10)
-            recommendations = [{'title': t, 'genre': manga_df[manga_df['title'] == t]['genre'].values[0]} for t, _ in cbf_recs]
+            row = manga_df[manga_df['id'] == last_manga_id]
+            if not row.empty:
+                seed_title = row['title'].values[0]
+                recommendations = get_cbf_recommendations(seed_title, top_n=10)
+            else:
+                recommendations = manga_df.sample(10).to_dict(orient='records')
         else:
             # No history → random diverse recommendations
-            recommendations = manga_df.sample(10)[['title', 'genres','image_url']].to_dict(orient='records')
+            recommendations = manga_df.sample(10).to_dict(orient='records')
 
     return render_template("index.html", recommendations=recommendations)
 

@@ -164,6 +164,68 @@ p.hint {
     margin-bottom: 1rem;
 }
 
+/* --- Meta Badges --- */
+.manga-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.author-badge {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+/* --- Expandable Synopsis --- */
+.synopsis-details {
+    text-align: left;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.synopsis-details summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: #007bff;
+    outline: none;
+    user-select: none;
+    text-align: center;
+}
+
+.synopsis-details summary:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.synopsis-text {
+    margin-top: 0.5rem;
+    color: #555;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .card-body form {
     margin-top: 1rem;
 }

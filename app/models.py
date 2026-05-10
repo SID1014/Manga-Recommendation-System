@@ -2,6 +2,7 @@
 from .database import db
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy.orm import validates
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,5 +17,10 @@ class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     manga_id = db.Column(db.Integer, nullable=False)
-    rating = db.Column(db.Integer, nullable=False)  # 1-5 stars
+    rating = db.Column(db.Integer, nullable=False)  # 1-10 scale
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @validates('rating')
+    def validate_rating(self, key, value):
+        assert 1 <= value <= 10, "Rating must be between 1 and 10"
+        return value

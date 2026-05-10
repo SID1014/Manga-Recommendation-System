@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
   <title>Manga Recommender — Demo</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -12,10 +13,8 @@
         <a href="{{ url_for('auth.signup') }}" class="btn-signup">Sign Up</a>
     {% else %}
         <span>Welcome, {{ current_user.username }}!</span>
+        <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
         <a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a>
-        <li class="nav-item">
-  <a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a>
-</li>
     {% endif %}
 </div>
   <div class="container">
@@ -63,13 +62,26 @@
             <img src="{{ rec.image_url }}" alt="{{ rec.title }}">
         {% endif %}
             <h5 class="card-title">{{ rec.title }}</h5>
-            <p class="card-text text-muted">{{ rec.genre }}</p>
+            <p class="card-text text-muted" style="font-size: 0.9rem;">{{ rec.genres }}</p>
+
+            <div class="manga-meta">
+              {% if rec.score and rec.score != 'N/A' and rec.score > 0 %}<span class="badge">⭐ {{ rec.score }}</span>{% endif %}
+              {% if rec.status and rec.status != 'N/A' %}<span class="badge status-badge">{{ rec.status }}</span>{% endif %}
+              {% if rec.chapters and rec.chapters != 'N/A' %}<span class="badge">{{ rec.chapters }} Chaps</span>{% endif %}
+            </div>
+
+            {% if rec.synopsis %}
+            <details class="synopsis-details">
+              <summary>Read Synopsis</summary>
+              <p class="synopsis-text">{{ rec.synopsis }}</p>
+            </details>
+            {% endif %}
 
             {% if current_user.is_authenticated %}
               <form action="{{ url_for('main.rate_manga') }}" method="POST" class="d-flex justify-content-center">
-                <input type="hidden" name="manga_id" value="{{ rec.manga_id }}">
+                <input type="hidden" name="manga_id" value="{{ rec.id }}">
                 <select name="rating" class="form-select form-select-sm me-2">
-                  {% for i in range(1, 6) %}
+                  {% for i in range(1, 11) %}
                     <option value="{{ i }}">{{ i }}</option>
                   {% endfor %}
                 </select>
