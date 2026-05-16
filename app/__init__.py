@@ -10,5 +10,9 @@ def create_app():
 
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix="/auth")
+    
+    with app.app_context():
+        from .collaborative import build_cf_model
+        build_cf_model()
 
     return app
