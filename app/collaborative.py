@@ -16,12 +16,20 @@ MIN_RATINGS_THRESHOLD = 20
 
 
 def _load_ratings_from_db():
-    """Pull all ratings from the database into a DataFrame."""
-    ratings_df = pd.read_sql(
-        db.session.query(Rating).statement,
-        db.session.bind
-    )
-    return ratings_df
+    ratings = Rating.query.all()
+    
+    if not ratings:
+        return pd.DataFrame(columns=['user_id', 'manga_id', 'rating'])
+    
+    records = [
+        {
+            'user_id': r.user_id,
+            'manga_id': r.manga_id,
+            'rating': r.rating
+        }
+        for r in ratings
+    ]
+    return pd.DataFrame(records)
 
 
 def generate_synthetic_ratings(manga_ids, n_users=200, seed=42):
