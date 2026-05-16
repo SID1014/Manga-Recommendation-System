@@ -25,7 +25,7 @@ def find_closest_title(query):
     q = query.strip().lower()
     if q in title_to_idx:
         return q, title_to_idx[q]
-    # fallback: try simple partial match
+   
     for title, idx in title_to_idx.items():
         if q in title:
             return title, idx
@@ -54,14 +54,12 @@ def get_cbf_recommendations(manga_title, top_n=8):
 
 
 def get_random_manga_samples(df, n=10):
-    # Shuffle the dataframe and pick random rows
+    
     sample_df = df.sample(n=n)
     return sample_df.to_dict(orient='records')
 
 def get_cbf_scores(title, top_n=10):
-    """
-    Return list of (manga_id, similarity_score) instead of just titles.
-    """
+    
     _, idx = find_closest_title(title)
     if idx is None:
         return []

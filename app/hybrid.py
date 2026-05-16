@@ -2,9 +2,7 @@ from .collaborative import get_cf_recommendations
 from .recommender import get_cbf_scores, manga_df
 
 def get_hybrid_recommendations(user_id, title, alpha=0.5, top_n=10):
-    """
-    Combine CBF + CF scores for final hybrid recommendations.
-    """
+    
     # Step 1: Content-based recommendations
     cbf_scores = get_cbf_scores(title, top_n=50)  # Get a bigger pool
     cbf_dict = {mid: score for mid, score in cbf_scores}
@@ -35,15 +33,13 @@ def get_hybrid_recommendations(user_id, title, alpha=0.5, top_n=10):
     recommendations = []
     # Iterate through the top N results to build the dictionary list
     for mid, score in sorted_scores[:top_n]:
-        # Find the manga's details in the main DataFrame
         manga_details = manga_df[manga_df['id'] == mid]
         
-        # Make sure we found the manga before proceeding
+        
         if not manga_details.empty:
-            # Get the first matching row (should be only one)
             manga_row = manga_details.iloc[0]
             
-            # Create a dictionary with all the desired fields
+            
             rec_dict = {
                 'id': int(mid),
                 'title': manga_row.get('title', ''),

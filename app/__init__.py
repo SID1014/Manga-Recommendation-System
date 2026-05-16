@@ -5,7 +5,7 @@ from .auth_routes import auth
 
 def create_app():
     app = Flask(__name__, static_folder="../static", template_folder="../templates")
-    app.secret_key = "supersecretkey"  # change later
+    app.secret_key = "supersecretkey"  
     init_db(app)
 
     app.register_blueprint(main)
